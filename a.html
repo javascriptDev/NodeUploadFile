@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="jquery-1.11.1.js"></script>
+</head>
+<body>
+
+<input type="file" id="a">
+
+
+<script>
+    var a = document.querySelector('#a');
+
+    a.onchange = function () {
+        file = a.files[0];
+        uploadFile(file);
+    }
+
+    function uploadFile(file) {
+        var xhr = new XMLHttpRequest();
+
+
+        /* event listners */
+        xhr.upload.addEventListener("progress", function (e) {
+            document.querySelector('progress').setAttribute('value', 100 * (e.loaded / e.total));
+        }, false);
+        xhr.addEventListener("load", function () {
+            alert('上传完毕');
+        }, false);
+        xhr.addEventListener("error", function () {
+            //debugger;
+        }, false);
+        xhr.addEventListener("abort", function () {
+            // debugger;
+        }, false);
+        /* Be sure to change the url below to the url of your upload server side script */
+        xhr.open("POST", "http://localhost:8000/AA");
+        xhr.send(file);
+    }
+
+
+</script>
+
+<progress max="100" value="0" id="a">1</progress>
+</body>
+</html>
